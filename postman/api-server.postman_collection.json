@@ -1,0 +1,171 @@
+{
+	"variables": [],
+	"info": {
+		"name": "API SERVER",
+		"_postman_id": "30ec7f1c-c81a-0eb9-671e-2824555d7e45",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET PING http://localhost:3001/ping",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3001/ping",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "Simple ping to check Resource Server is responding - no authorization credentials (JWT access token) required."
+			},
+			"response": []
+		},
+		{
+			"name": "GET Profiles http://localhost:3001/secured/profiles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3001/api/v1/profiles",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "Get all Profiles - must have read:profiles scope"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Profile http://localhost:3001/secured/profiles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3001/api/v1/profiles/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "Get specific profile by id - must have read:profile or read:profiles scope info"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Profile http://localhost:3001/secured/profiles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3001/api/v1/profiles",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Chuck\",\n    \"email\": \"chuck@communications.com\"\n }"
+				},
+				"description": "Create a new Profile - must have write:profile scope"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Profile http://localhost:3001/secured/profiles",
+			"request": {
+				"url": "http://localhost:3001/api/v1/profiles/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bob@youwerehacked.com\"\n }"
+				},
+				"description": "Update existing Profile - must have write:profile scope"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Profile http://localhost:3001/secured/profiles",
+			"request": {
+				"url": "http://localhost:3001/api/v1/profiles/2",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "Delete an existing Profile - must have delete:profile scope"
+			},
+			"response": []
+		}
+	]
+}

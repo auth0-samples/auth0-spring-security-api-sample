@@ -21,22 +21,20 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class EmailRetrievalService {
+public class UsernameService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private Auth0Client auth0Client;
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-//    @PreAuthorize("hasAuthority('ROLE_USER')")
-    public String fetchEmail() {
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String getUsername() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final Auth0UserDetails principal = (Auth0UserDetails) authentication.getPrincipal();
         logger.info("Current user accessed Admin secured resource: " + principal.getUsername());
         // we already have the username.. but for this sample lets call Auth0 service anyway..
-        final String email = auth0Client.getUsername((Auth0JWTToken) authentication);
-        return email;
+        return auth0Client.getUsername((Auth0JWTToken) authentication);
     }
 
 }

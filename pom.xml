@@ -5,7 +5,7 @@
 
 	<groupId>com.auth0</groupId>
 	<artifactId>auth0-spring-security-api-sample</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>auth0-spring-security-api-sample</name>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>auth0-spring-security-api</artifactId>
-            <version>0.0.1</version>
+			<version>0.0.1</version>
         </dependency>
 
 		<dependency>
