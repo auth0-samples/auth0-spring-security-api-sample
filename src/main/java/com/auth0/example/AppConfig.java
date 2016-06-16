@@ -18,17 +18,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 public class AppConfig extends Auth0SecurityConfig {
 
     /**
-     * Not required for the Spring Security implementation, but offers Auth0 API access
+     * Provides Auth0 API access
      */
     @Bean
     public Auth0Client auth0Client() {
         return new Auth0Client(clientId, issuer);
     }
 
-    /**
-     * Override this function in subclass to apply custom authentication / authorization
-     * strategies to your appliaction endpoints
-     */
     @Override
     protected void authorizeRequests(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
