@@ -1,4 +1,7 @@
-### Spring Boot / Auth0 JWT API
+### Auth0 API Sample - using Spring Boot and Spring Security
+
+This is a companion sample for the [Auth0 Spring Security API](https://github.com/auth0/auth0-spring-security-api) library.
+Please refer to that library and documentation for further information specific to the library itself.
 
 Demonstrates using Auth0 with Spring Boot and Spring Security to create a Java Spring API - JWT Token and Role level Authorization
 
