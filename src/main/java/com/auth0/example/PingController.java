@@ -12,8 +12,25 @@ public class PingController {
 	@RequestMapping(value = "/ping")
 	@ResponseBody
 	public String ping() {
-		return "All good. You don't need to be authenticated to call this";
+		return "All good. You DO NOT need to be authenticated to call /ping";
 	}
 
+    @RequestMapping(value = "/pong")
+    @ResponseBody
+    public String pong() {
+        return "All good. You DO NOT need to be authenticated to call /pong";
+    }
+
+	@RequestMapping(value = "/secured/ping")
+	@ResponseBody
+	public String securedPing() {
+		return "All good. You DO need to be authenticated to call /secured/ping";
+	}
+
+	@RequestMapping(value = "/api/v1/ping")
+	@ResponseBody
+	public String securedApiv1Ping() {
+		return "All good. You DO need to be authenticated to call /api/v1/ping";
+	}
 
 }

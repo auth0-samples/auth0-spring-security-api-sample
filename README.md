@@ -109,17 +109,20 @@ Here is our sample `AppConfig` entry where we specify the endpoints security set
 
 
 ```
-  @Override
-      protected void authorizeRequests(final HttpSecurity http) throws Exception {
-          http.authorizeRequests()
-                  .antMatchers("/ping").permitAll()
-                  .antMatchers(HttpMethod.GET, "/api/v1/profiles").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                  .antMatchers(HttpMethod.GET, "/api/v1/profiles/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                  .antMatchers(HttpMethod.POST, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
-                  .antMatchers(HttpMethod.PUT, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
-                  .antMatchers(HttpMethod.DELETE, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
-                  .antMatchers(securedRoute).authenticated();
-      }
+    @Override
+    protected void authorizeRequests(final HttpSecurity http) throws Exception {
+        // include some Spring Boot Actuator endpoints to check metrics
+        // add others or remove as you choose, this is just a sample config to illustrate
+        // most specific rules must come - order is important (see Spring Security docs)
+        http.authorizeRequests()
+                .antMatchers("/ping", "/pong").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/profiles").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/v1/profiles/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated();
+    }
 ```
 
 
@@ -320,9 +323,7 @@ or
 curl -X DELETE -H "Authorization: Bearer {{jwt_token}}" -H "Cache-Control: no-cache" "http://localhost:3001/api/v1/profiles/2"
 ```
 
-
 ---
-
 
 ## What is Auth0?
 
