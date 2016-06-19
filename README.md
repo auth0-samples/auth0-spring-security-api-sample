@@ -143,6 +143,10 @@ provided with the `auth0-spring-security-api` library itself. That is a default 
 simpler applications with a single secured URL endpoint and acts as a template for actual apps to base their
 config from - also used for autowiring dependencies for tests in the library.
 
+For details on the other settings, please check the README for the library this sample depends on  [Auth0 Spring Security API](https://github.com/auth0/auth0-spring-security-api).
+In particular, [this section on defalut configuration](https://github.com/auth0/auth0-spring-security-api#default-configuration) which lists each property together with a
+description on its purpose.
+
 
 ### Build and Run
 
@@ -175,9 +179,9 @@ lock.showSignin({
 });
 ```
 
-If this is still sounding like a lot of work, read the next section on Postman - this is nearly completely automated for you!
+If this is still sounding like a lot of work, read the next section on Postman - this is nearly completely automated for you...
 
-### Postman to the Rescue (OPTIONAL STEP)
+### Use Pre-configured Postman Collection (OPTIONAL STEP)
 
 Postman is an incredibly helpful tool for testing HTTP / REST apis.  With this sample, there is also a [postman](https://www.getpostman.com) collection
 `postman/api-server.postman_collection.json` published in case you use postman for your API testing.
@@ -220,7 +224,7 @@ redirects are disabled. To do this, you must have the Postman Interceptor instal
 (- I was using Chrome web browser when doing this)
 
 The Interceptor is simply another developer tool. Once installed, just follow the screenshots
-below and we are ready to go!
+below and we are ready to go.
 
 ######  Once installed, enable interceptor as below
 
@@ -238,11 +242,13 @@ below and we are ready to go!
 ![](img/7.redirectsoff.jpg)
 
 
-##### Run Postman !!!
+##### Run Postman
+
+Ok, time to finally put all that preparation work to good use.
 
 At this point, execute the `/usernamepassword/login` command, followed by `/login/callback`
 
-You now have a brand new JWT Token that will be automatically supplied with each call!
+You now have a brand new JWT Token that will be automatically supplied with each call.
 
 ![](img/8.jwttoken.jpg)
 
@@ -251,7 +257,7 @@ And finally, run one of the endpoints:
 
 ![](img/9.success.jpg)
 
-Congratulations, you're awesome!
+Congratulations, you're awesome. :)
 
 
 ##### Bonus - view JWT Token using https://jwt.io
@@ -265,9 +271,9 @@ You should get some good ideas on how it looks:
 
 ### Prefer the Command Line
 
-If you'd rather avoid Postman, and obtain your JWT token another way (perhaps downloaading
+If you'd rather avoid Postman, and obtain your JWT token another way (perhaps downloading
 an alternate seed project for the same application and running that, or else generating your own
-with a JWT SDK library etc, then no probs.
+with a JWT SDK library etc), then no probs.
 
 Here are some examples of the available endpoints using CURL from the command line instead.
 For the secured endpoints, please ensure you replace {{jwt_token}} with your JWT Token value.
