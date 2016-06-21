@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Throwaway stub for demonstration only - feel free to implement a JPA repository
+ * using Spring Boot - required dependencies (with h2 db) already configured
+ * in maven pom.xml for this sample...
+ */
 @Component
 public class ProfileRepositoryStub {
 
@@ -27,20 +32,24 @@ public class ProfileRepositoryStub {
 	}
 
 	public static Profile create(Profile profile) {
-		idIndex += idIndex;
+		idIndex += 1;
 		profile.setId(idIndex);
 		profiles.put(idIndex, profile);
 		return profile;
 	}
 
 	public static Profile get(Long id) {
-		return profiles.get(id);
+		final Profile profile = profiles.get(id);
+		if (profile == null) {
+			throw new ResourceNotFoundException("Cannot find profile with id: " + id);
+		}
+		return profile;
 	}
 
 	public static Profile update(Long id, Profile profile) {
         final Profile persistedProfile = profiles.get(id);
 		if (persistedProfile == null) {
-			throw new IllegalStateException("Cannot find profile with id: " + id);
+			throw new ResourceNotFoundException("Cannot find profile with id: " + id);
 		}
         if (profile.getName() != null) {
            persistedProfile.setName(profile.getName());
@@ -54,7 +63,7 @@ public class ProfileRepositoryStub {
 
 	public static Profile delete(Long id) {
 		if (profiles.get(id) == null) {
-			throw new IllegalStateException("Cannot find profile with id: " + id);
+			throw new ResourceNotFoundException("Cannot find profile with id: " + id);
 		}
 		return profiles.remove(id);
 	}

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -32,7 +33,7 @@ public class ProfileController {
      * Here, as demonstration, we want to do audit as only ROLE_ADMIN can create user..
      */
     @RequestMapping(value ="profiles", method = RequestMethod.POST)
-    public Profile create(@RequestBody Profile profile, final Principal principal) {
+    public Profile create(final @Validated @RequestBody Profile profile, final Principal principal) {
         logger.info("create invoked");
         printGrantedAuthorities((Auth0JWTToken) principal);
         final String username = usernameService.getUsername();
@@ -42,30 +43,21 @@ public class ProfileController {
     }
 
     @RequestMapping(value ="profiles/{id}", method = RequestMethod.GET)
-    public Profile get(@PathVariable Long id) {
+    public Profile get(final @PathVariable Long id) {
         logger.info("get invoked");
         return profileService.get(id);
     }
 
     @RequestMapping(value ="profiles/{id}", method = RequestMethod.PUT)
-    public Profile update(@PathVariable Long id, @RequestBody Profile profile) {
+    public Profile update(final @PathVariable Long id, final @Validated @RequestBody Profile profile) {
         logger.info("update invoked");
         return profileService.update(id, profile);
     }
 
     @RequestMapping(value ="profiles/{id}", method = RequestMethod.DELETE)
-    public Profile delete(@PathVariable Long id) {
+    public Profile delete(final @PathVariable Long id) {
         logger.info("delete invoked");
         return profileService.delete(id);
-    }
-
-    /**
-     *  Lazy - simple demo of custom exception handling at Controller level
-     *  Just respond with a 200 indicating issue...
-     */
-    @ExceptionHandler(value = IllegalStateException.class)
-    public String illegalStateExceptionHandler(IllegalStateException e){
-        return e.getMessage();
     }
 
     /**

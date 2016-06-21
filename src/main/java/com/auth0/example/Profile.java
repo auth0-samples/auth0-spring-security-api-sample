@@ -1,9 +1,20 @@
 package com.auth0.example;
 
+import org.hibernate.validator.constraints.Email;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Profile {
 
     private Long id;
+
+    @NotNull(message = "Name is required")
+    @Size(min = 3, max = 15)
     private String name;
+
+    @NotNull(message = "Email is required")
+    @Email(message = "Must be valid email")
     private String email;
 
     public Profile() {}
