@@ -7,6 +7,9 @@ Demonstrates using Auth0 with Spring Boot and Spring Security to create a Java S
 
 This sample would be suitable for headless APIs and SPA (single page application) backend end server scenarios.
 
+For an example of a SPA application sample (written using AngularJS 1.x), that was written as a companion client GUI sample
+to this sample, please refer to the [Auth0 Spring Security API Client Samples](https://github.com/auth0-samples/auth0-spring-security-api-client-samples).
+
 This sample application shows you how to:
 
  1. Configure and run Java based Spring API server with Auth0 and Spring Security
