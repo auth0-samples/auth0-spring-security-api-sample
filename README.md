@@ -140,9 +140,15 @@ We are restricting POST, PUT and DELETE operations to strictly `ROLE_ADMIN` leve
 
 Enter your:
 
-`client_id`, `client_secret`, and `domain` information into `src/main/resources/auth0.properties`
+`auth0.domain`, `auth0.issuer`, `auth0.clientId`, and `auth0.clientSecret` information into `src/main/resources/auth0.properties`.
 
-Note: There is a property in `auth0.properties` that you do not need to touch. Leave the value as `false`
+Note:
+
+`auth0.issuer` should have the value `https://YOUR_DOMAIN.auth0.com/` (the trailing slash is important).
+For example, if your `auth0.domain` is `example.auth0.com` then `auth0.issuer` should have value `https://example.auth0.com/`.
+
+
+There is a property in `auth0.properties` that you do not need to touch. Leave the value as `false`
 
 `auth0.defaultAuth0ApiSecurityEnabled: false` - this ensures we do not autowire the default configuration file
 provided with the `auth0-spring-security-api` library itself. That is a default configuration suitable only for
