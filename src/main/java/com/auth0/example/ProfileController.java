@@ -18,6 +18,9 @@ public class ProfileController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
+    protected AppConfig appConfig;
+
+    @Autowired
     protected ProfileService profileService;
 
     @Autowired
@@ -36,9 +39,11 @@ public class ProfileController {
     public Profile create(final @Validated @RequestBody Profile profile, final Principal principal) {
         logger.info("create invoked");
         printGrantedAuthorities((Auth0JWTToken) principal);
-        final String username = usernameService.getUsername();
-        // log username of user requesting profile creation
-        logger.info("User with email: " + username + " creating new profile");
+        if ("ROLES".equals(appConfig.getAuthorityStrategy())) {
+            final String username = usernameService.getUsername();
+            // log username of user requesting profile creation
+            logger.info("User with email: " + username + " creating new profile");
+        }
         return profileService.create(profile);
     }
 

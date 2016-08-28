@@ -46,4 +46,13 @@ public class AppConfig extends Auth0SecurityConfig {
                 .anyRequest().authenticated();
     }
 
+    /*
+     * Only required for sample purposes..
+     */
+    String getAuthorityStrategy() {
+       return super.authorityStrategy;
+    }
+
+
+
 }
