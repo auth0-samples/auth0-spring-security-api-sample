@@ -1,4 +1,4 @@
-# Starter Seed
+# Authentication
 
 This example shows how to secure your Java Spring Security API endpoints using Auth0-issued JSON Web Tokens.
 
