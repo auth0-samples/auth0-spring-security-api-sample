@@ -156,7 +156,7 @@ simpler applications with a single secured URL endpoint and acts as a template f
 config from - also used for autowiring dependencies for tests in the library.
 
 For details on the other settings, please check the README for the library this sample depends on  [Auth0 Spring Security API](https://github.com/auth0/auth0-spring-security-api).
-In particular, [this section on defalut configuration](https://github.com/auth0/auth0-spring-security-api#default-configuration) which lists each property together with a
+In particular, [this section on default configuration](https://github.com/auth0/auth0-spring-security-api#default-configuration) which lists each property together with a
 description on its purpose.
 
 
