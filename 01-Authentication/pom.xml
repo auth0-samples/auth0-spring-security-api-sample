@@ -42,13 +42,13 @@
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>auth0-spring-security-api</artifactId>
-            <version>0.3.1</version>
+            <version>0.3.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>auth0</artifactId>
-            <version>0.3.0</version>
+            <version>0.4.0</version>
         </dependency>
 
         <dependency>
