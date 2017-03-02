@@ -1,5 +1,2 @@
-auth0.domain:{DOMAIN}
 auth0.issuer:https://{DOMAIN}/
-auth0.clientId:{CLIENT_ID}
-auth0.clientSecret:{CLIENT_SECRET}
 auth0.apiAudience:{API_AUDIENCE}
