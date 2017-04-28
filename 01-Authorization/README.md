@@ -72,18 +72,32 @@ mvn spring-boot:run
 
 ## Test the API
 
-To test the non-secure endpoint send a `GET` request at `http://localhost:3001/ping`.
+To test the non-secure endpoint send a `GET` request at `http://localhost:3001/login`.
 
 ```bash
-curl -X GET -H "Content-Type: application/json" -H "Cache-Control: no-cache" "http://localhost:3001/ping"
+curl -X GET -H "Content-Type: application/json" -H "Cache-Control: no-cache" "http://localhost:3001/login"
 ```
 
-You should get the message: `All good. You DO NOT need to be authenticated to call /ping`.
+You should get the message: `All good. You DO NOT need to be authenticated to call /login`.
 
-To test the secure endpoint send a `GET` request at `http://localhost:3001/secured/ping`. In this case you will also have to add a valid `id_token` to your request.
+To test the secure endpoint send a `GET` request at `http://localhost:3001/secured/ping`. In this case you will also have to add a valid `access_token` to your request.
 
 ```bash
-curl -X GET -H "Authorization: Bearer {YOUR_ID_TOKEN}" -H "Cache-Control: no-cache" "http://localhost:3001/secured/ping"
+curl -X GET -H "Authorization: Bearer {YOUR_ACCESS_TOKEN}" -H "Cache-Control: no-cache" "http://localhost:3001/secured/ping"
 ```
 
-You should get the message: `All good. You DO need to be authenticated to call /secured/ping`.
+You should get the message: `All good. You can see this because you are Authenticated.`.
+
+To test the endpoints with scope access send a request at `http://localhost:3001/photos` with a valid `access_token`. In this case request method depends on the scope:
+* `read:photos` scope - use `GET` request
+* `create:photos` scope - use `POST` request
+* `update:photos` scope - use `PUT` request
+* `delete:photos` scope - use `DELETE` request
+
+For example:
+
+```bash
+curl -X GET -H "Authorization: Bearer {YOUR_ACCESS_TOKEN}" -H "Cache-Control: no-cache" "http://localhost:3001/photos"
+```
+
+You should get the message: `All good. You can see this because you are Authenticated with a Token granted the 'read:photos' scope`.
