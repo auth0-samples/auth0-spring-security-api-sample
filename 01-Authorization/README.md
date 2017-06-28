@@ -2,7 +2,7 @@
 
 This example shows how to secure your Java Spring Security API endpoints using Auth0-issued JSON Web Tokens.
 
-You can read a quickstart for this sample [here](https://auth0.com/docs/quickstart/backend/java-spring-security/01-authentication).
+You can read a quickstart for this sample [here](https://auth0.com/docs/quickstart/backend/java-spring-security).
 
 Start by renaming the `auth0.properties.example` file in `src/main/resources` to `auth0.properties` and provide it with your application's domain, client ID, client secret, and issuer.
 
@@ -101,3 +101,11 @@ curl -X GET -H "Authorization: Bearer {YOUR_ACCESS_TOKEN}" -H "Cache-Control: no
 ```
 
 You should get the message: `All good. You can see this because you are Authenticated with a Token granted the 'read:photos' scope`.
+
+A quick and easy way to obtain an `access_token` is to call the `/oauth/token` endpoint of the Auth0 Authentication API:
+
+```bash
+curl --request POST --url 'https://YOUR_AUTH0_DOMAIN/oauth/token' \
+  --header 'content-type: application/json' \
+  --data '{"grant_type":"client_credentials", "client_id":"{CLIENT_ID}", "client_secret":"{CLIENT_SECRET}", "audience":"{YOUR_API_IDENTIFIER}" }'
+```
