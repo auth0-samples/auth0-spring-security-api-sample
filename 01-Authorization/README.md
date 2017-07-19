@@ -2,7 +2,7 @@
 
 This example shows how to secure your Java Spring Security API endpoints using Auth0-issued JSON Web Tokens.
 
-You can read a quickstart for this sample [here](https://auth0.com/docs/quickstart/backend/java-spring-security).
+You can read a quickstart for this sample [here](https://auth0.com/docs/quickstart/backend/java-spring-security/01-authorization).
 
 Start by renaming the `auth0.properties.example` file in `src/main/resources` to `auth0.properties` and provide it with your application's domain, client ID, client secret, and issuer.
 
