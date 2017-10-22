@@ -22,44 +22,79 @@ mvn -v
 
 ## Configure the endpoints
 
-This seed uses two endpoints: `ping` and `secured/ping`. The former will not require authentication, while the later will do.
+This seed uses 3 types of endpoint security:
+* `permitAll` - will NOT require authentication
+* `authenticated` - will require authentication
+* `hasAuthority` - will require authentication with specific scope
 
-First we create the controller for our endpoints: `PingController.java`.
+First we create the controller for our endpoints: `PhotosController.java`.
 
 ```java
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Component
-public class PingController {
+public class PhotosController {
 
-	@RequestMapping(value = "/ping")
-	@ResponseBody
-	public String ping() {
-		return "All good. You DO NOT need to be authenticated to call /ping";
-	}
+    @RequestMapping(value = "/login")
+    @ResponseBody
+    public String login() {
+        return "All good. You DO NOT need to be authenticated to call /login";
+    }
 
-	@RequestMapping(value = "/secured/ping")
-	@ResponseBody
-	public String securedPing() {
-		return "All good. You DO need to be authenticated to call /secured/ping";
-	}
+    @RequestMapping(value = "/photos", method = RequestMethod.GET)
+    @ResponseBody
+    public String getPhotos() {
+        return "All good. You can see this because you are Authenticated with a Token granted the 'read:photos' scope";
+    }
+
+    @RequestMapping(value = "/photos", method = RequestMethod.POST)
+    @ResponseBody
+    public String createPhotos() {
+        return "All good. You can see this because you are Authenticated with a Token granted the 'create:photos' scope";
+    }
+
+    @RequestMapping(value = "/photos", method = RequestMethod.PUT)
+    @ResponseBody
+    public String updatePhotos() {
+        return "All good. You can see this because you are Authenticated with a Token granted the 'update:photos' scope";
+    }
+
+    @RequestMapping(value = "/photos", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deletePhotos() {
+        return "All good. You can see this because you are Authenticated with a Token granted the 'delete:photos' scope";
+    }
+
+    @RequestMapping(value = "/**")
+    @ResponseBody
+    public String anyRequest() {
+        return "All good. You can see this because you are Authenticated.";
+    }
 
 }
 ```
 
-Next we  configure which endpoint is secure and which is not, by editing the `AppConfig.java` file:
+Next we configure which endpoint is secure and which is not, by editing the `AppConfig.java` file:
 
 ```java
 @Override
-  protected void authorizeRequests(final HttpSecurity http) throws Exception {
-      http.authorizeRequests()
-        .antMatchers("/ping").permitAll()
-        .anyRequest().authenticated();
-  }
+protected void authorizeRequests(final HttpSecurity http) throws Exception {
+    JwtWebSecurityConfigurer
+      .forRS256(apiAudience, issuer)
+      .configure(http)
+      .authorizeRequests()
+      .antMatchers(HttpMethod.GET, "/login").permitAll()
+      .antMatchers(HttpMethod.GET, "/photos/**").hasAuthority("read:photos")
+      .antMatchers(HttpMethod.POST, "/photos/**").hasAuthority("create:photos")
+      .antMatchers(HttpMethod.PUT, "/photos/**").hasAuthority("update:photos")
+      .antMatchers(HttpMethod.DELETE, "/photos/**").hasAuthority("delete:photos")
+      .anyRequest().authenticated();
+}
 ```
 
 ## Build and Run
