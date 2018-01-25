@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Component
-public class PhotosController {
+public class APIController {
 
     @RequestMapping(value = "/api/public", method = RequestMethod.GET)
     @ResponseBody
