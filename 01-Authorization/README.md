@@ -4,7 +4,7 @@ This example shows how to secure your Java Spring Security API endpoints using A
 
 You can read a quickstart for this sample [here](https://auth0.com/docs/quickstart/backend/java-spring-security/01-authorization).
 
-Start by renaming the `auth0.properties.example` file in `src/main/resources` to `auth0.properties` and provide it with your application's domain, client ID, client secret, and issuer.
+Start by renaming the `auth0.properties.example` file in `src/main/resources` to `auth0.properties` and provide it with your application's domain and issuer.
 
 ## Prerequisites
 
@@ -22,44 +22,62 @@ mvn -v
 
 ## Configure the endpoints
 
-This seed uses two endpoints: `ping` and `secured/ping`. The former will not require authentication, while the later will do.
+This seed uses three endpoints: `api/public`, `api/private` and `api/private`. The former will not require authentication, while the later will do.
 
-First we create the controller for our endpoints: `PingController.java`.
+First we create the controller for our endpoints: `APIController.java`.
 
 ```java
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.json.JSONObject;
 
 @Controller
 @Component
-public class PingController {
+public class APIController {
 
-	@RequestMapping(value = "/ping")
-	@ResponseBody
-	public String ping() {
-		return "All good. You DO NOT need to be authenticated to call /ping";
-	}
+	@RequestMapping(value = "/api/public", method = RequestMethod.GET, produces = "application/json")
+        @ResponseBody
+        public String publicEndpoint() {
+            return new JSONObject()
+                    .put("message", "All good. You DO NOT need to be authenticated to call /api/public.")
+                    .toString();
+        }
 
-	@RequestMapping(value = "/secured/ping")
-	@ResponseBody
-	public String securedPing() {
-		return "All good. You DO need to be authenticated to call /secured/ping";
-	}
+        @RequestMapping(value = "/api/private", method = RequestMethod.GET, produces = "application/json")
+        @ResponseBody
+        public String privateEndpoint() {
+            return new JSONObject()
+                    .put("message", "All good. You can see this because you are Authenticated.")
+                    .toString();
+        }
+
+        @RequestMapping(value = "/api/private-scoped", method = RequestMethod.GET, produces = "application/json")
+        @ResponseBody
+        public String privateScopedEndpoint() {
+            return new JSONObject()
+                    .put("message", "All good. You can see this because you are Authenticated with a Token granted the 'read:messages' scope")
+                    .toString();
+        }
 
 }
 ```
 
-Next we  configure which endpoint is secure and which is not, by editing the `AppConfig.java` file:
+Next we configure which endpoint is secure and which is not, by editing the `AppConfig.java` file:
 
 ```java
 @Override
-  protected void authorizeRequests(final HttpSecurity http) throws Exception {
-      http.authorizeRequests()
-        .antMatchers("/ping").permitAll()
-        .anyRequest().authenticated();
-  }
+protected void configure(HttpSecurity http) throws Exception {
+    JwtWebSecurityConfigurer
+            .forRS256(apiAudience, issuer)
+            .configure(http)
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/api/public").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/private").authenticated()
+            .antMatchers(HttpMethod.GET, "/api/private-scoped").hasAuthority("read:messages");
+}
 ```
 
 ## Build and Run
@@ -72,35 +90,29 @@ mvn spring-boot:run
 
 ## Test the API
 
-To test the non-secure endpoint send a `GET` request at `http://localhost:3010/login`.
+To test the non-secure endpoint send a `GET` request at `http://localhost:3010/api/public`.
 
 ```bash
-curl -X GET -H "Content-Type: application/json" -H "Cache-Control: no-cache" "http://localhost:3010/login"
+curl -X GET -H "Content-Type: application/json" -H "Cache-Control: no-cache" "http://localhost:3010/api/public"
 ```
 
-You should get the message: `All good. You DO NOT need to be authenticated to call /login`.
+You should get the message: `All good. You DO NOT need to be authenticated to call /api/public.`.
 
-To test the secure endpoint send a `GET` request at `http://localhost:3010/`. In this case you will also have to add a valid `access_token` to your request.
+To test the secure endpoint send a `GET` request at `http://localhost:3010/api/private`. In this case you will also have to add a valid `access_token` to your request.
 
 ```bash
-curl -X GET -H "Authorization: Bearer {YOUR_ACCESS_TOKEN}" -H "Cache-Control: no-cache" "http://localhost:3010/"
+curl -X GET -H "Authorization: Bearer {YOUR_ACCESS_TOKEN}" -H "Cache-Control: no-cache" "http://localhost:3010/api/private"
 ```
 
 You should get the message: `All good. You can see this because you are Authenticated.`.
 
-To test the endpoints with scope access send a request at `http://localhost:3010/photos` with a valid `access_token`. In this case request method depends on the scope:
-* `read:photos` scope - use `GET` request
-* `create:photos` scope - use `POST` request
-* `update:photos` scope - use `PUT` request
-* `delete:photos` scope - use `DELETE` request
-
-For example:
+To test the endpoints with scope access send a `GET` request at `http://localhost:3010/private-scoped` with a valid `access_token` with a scope of `read:messages`.
 
 ```bash
-curl -X GET -H "Authorization: Bearer {YOUR_ACCESS_TOKEN}" -H "Cache-Control: no-cache" "http://localhost:3010/photos"
+curl -X GET -H "Authorization: Bearer {YOUR_ACCESS_TOKEN}" -H "Cache-Control: no-cache" "http://localhost:3010/api/private-scoped"
 ```
 
-You should get the message: `All good. You can see this because you are Authenticated with a Token granted the 'read:photos' scope`.
+You should get the message: `All good. You can see this because you are Authenticated with a Token granted the 'read:messages' scope`.
 
 ## Running the sample with Docker
 
