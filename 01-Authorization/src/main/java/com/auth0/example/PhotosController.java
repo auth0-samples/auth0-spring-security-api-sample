@@ -10,40 +10,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Component
 public class PhotosController {
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/api/public", method = RequestMethod.GET)
     @ResponseBody
-    public String login() {
-        return "All good. You DO NOT need to be authenticated to call /login";
+    public String publicEndpoint() {
+        return "All good. You DO NOT need to be authenticated to call /api/public";
     }
 
-    @RequestMapping(value = "/photos", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/private", method = RequestMethod.GET)
     @ResponseBody
-    public String getPhotos() {
-        return "All good. You can see this because you are Authenticated with a Token granted the 'read:photos' scope";
-    }
-
-    @RequestMapping(value = "/photos", method = RequestMethod.POST)
-    @ResponseBody
-    public String createPhotos() {
-        return "All good. You can see this because you are Authenticated with a Token granted the 'create:photos' scope";
-    }
-
-    @RequestMapping(value = "/photos", method = RequestMethod.PUT)
-    @ResponseBody
-    public String updatePhotos() {
-        return "All good. You can see this because you are Authenticated with a Token granted the 'update:photos' scope";
-    }
-
-    @RequestMapping(value = "/photos", method = RequestMethod.DELETE)
-    @ResponseBody
-    public String deletePhotos() {
-        return "All good. You can see this because you are Authenticated with a Token granted the 'delete:photos' scope";
-    }
-
-    @RequestMapping(value = "/**")
-    @ResponseBody
-    public String anyRequest() {
+    public String privateEndpoint() {
         return "All good. You can see this because you are Authenticated.";
+    }
+
+    @RequestMapping(value = "/api/private-scoped", method = RequestMethod.GET)
+    @ResponseBody
+    public String privateScopedEndpoint() {
+        return "All good. You can see this because you are Authenticated with a Token granted the 'read:messages' scope";
     }
 
 }
