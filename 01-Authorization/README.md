@@ -22,7 +22,7 @@ mvn -v
 
 ## Configure the endpoints
 
-This seed uses three endpoints: `api/public`, `api/private` and `api/private`. The former will not require authentication, while the later will do.
+This seed uses three endpoints: `api/public`, `api/private` and `api/private-scoped`. The former will not require authentication, while the later will do.
 
 First we create the controller for our endpoints: `APIController.java`.
 
