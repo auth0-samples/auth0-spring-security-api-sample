@@ -24,12 +24,9 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
                 .forRS256(apiAudience, issuer)
                 .configure(http)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/photos/**").hasAuthority("read:photos")
-                .antMatchers(HttpMethod.POST, "/photos/**").hasAuthority("create:photos")
-                .antMatchers(HttpMethod.PUT, "/photos/**").hasAuthority("update:photos")
-                .antMatchers(HttpMethod.DELETE, "/photos/**").hasAuthority("delete:photos")
-                .anyRequest().authenticated();
+                .antMatchers(HttpMethod.GET, "/api/public").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/private").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/private-scoped").hasAuthority("read:messages");
     }
 
 }
