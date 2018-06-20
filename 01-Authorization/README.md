@@ -14,6 +14,10 @@ In order to run this example you will need to have Maven installed. You can inst
 brew install maven
 ```
 
+::: note
+If you are using Windows, you need to download Maven's zip file, Unzip it to the directory you wish to install and configure the windows environment variables.
+:::
+
 Check that your maven version is 3.0.x or above:
 
 ```sh
