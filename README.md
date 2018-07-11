@@ -1,5 +1,7 @@
 ### Auth0 API Samples - using Spring Boot and Spring Security
 
+[![CircleCI](https://img.shields.io/circleci/project/github/auth0-samples/auth0-spring-security-api-samples.svg?style=flat-square)](https://circleci.com/gh/auth0-samples/auth0-spring-security-api-samples/tree/master)
+
 This is a set of samples for the [Auth0 Spring Security API](https://github.com/auth0/auth0-spring-security-api) library.
 Please refer to that library and documentation for further information specific to the library itself.
 
