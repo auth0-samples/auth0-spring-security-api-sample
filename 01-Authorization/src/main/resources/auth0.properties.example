@@ -1,2 +1,2 @@
-security.oauth2.resource.jwk.keySetUri:https://${DOMAIN}/.well-known/jwks.json
-security.oauth2.resource.id:${API_IDENTIFIER}
+security.oauth2.resource.jwk.keySetUri:https://{DOMAIN}/.well-known/jwks.json
+security.oauth2.resource.id:{API_IDENTIFIER}
