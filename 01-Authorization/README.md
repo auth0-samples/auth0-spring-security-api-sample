@@ -8,21 +8,7 @@ Start by renaming the `auth0.properties.example` file in `src/main/resources` to
 
 ## Prerequisites
 
-In order to run this example you will need to have Maven installed. You can install Maven with [brew](http://brew.sh/):
-
-```sh
-brew install maven
-```
-
-::: note
-If you are using Windows, you need to download Maven's zip file, Unzip it to the directory you wish to install and configure the windows environment variables.
-:::
-
-Check that your maven version is 3.0.x or above:
-
-```sh
-mvn -v
-```
+This example requires Java 8.
 
 ## Configure the endpoints
 
@@ -89,7 +75,13 @@ protected void configure(HttpSecurity http) throws Exception {
 In order to build and run the project execute:
 
 ```sh
-mvn spring-boot:run
+./mvnw spring-boot:run
+```
+
+Or on Windows:
+
+```sh
+mvnw.cmd spring-boot:run
 ```
 
 ## Test the API
