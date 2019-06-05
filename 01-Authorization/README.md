@@ -75,13 +75,13 @@ protected void configure(HttpSecurity http) throws Exception {
 In order to build and run the project execute:
 
 ```sh
-./mvnw spring-boot:run
+./gradlew clean bootRun
 ```
 
 Or on Windows:
 
 ```sh
-mvnw.cmd spring-boot:run
+gradlew.bat clean bootRun
 ```
 
 ## Test the API
