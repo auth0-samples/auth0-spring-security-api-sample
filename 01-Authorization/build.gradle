@@ -8,6 +8,9 @@ plugins {
     id 'org.springframework.boot' version '1.5.21.RELEASE'
 }
 
+ext['jackson.version'] = '2.9.9'
+ext['logback.version'] = '1.2.3'
+
 group = 'com.auth0'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
