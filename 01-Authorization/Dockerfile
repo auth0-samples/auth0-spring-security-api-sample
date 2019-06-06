@@ -1,8 +1,9 @@
-FROM maven:3.5-jdk-8-alpine
+FROM gradle:5.4.1-jdk8
 
-WORKDIR /usr/src/app
+WORKDIR /tmp
+ADD . /tmp
 
-COPY . /usr/src/app
+RUN gradle build
 
-CMD ["mvn", "spring-boot:run"]
+CMD ["gradle", "clean", "bootRun"]
 EXPOSE 3010
