@@ -5,11 +5,10 @@ buildscript {
 }
 
 plugins {
-    id 'org.springframework.boot' version '1.5.21.RELEASE'
+    id 'org.springframework.boot' version '1.5.22.RELEASE'
 }
 
-ext['jackson.version'] = '2.9.9'
-ext['logback.version'] = '1.2.3'
+apply plugin: 'io.spring.dependency-management'
 
 group = 'com.auth0'
 version = '0.0.1-SNAPSHOT'
@@ -26,4 +25,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.json:json:20180813'
+}
+
+dependencyManagement {
+  imports {
+    mavenBom 'com.fasterxml.jackson:jackson-bom:2.9.9.20190807'
+    mavenBom 'ch.qos.logback:logback-classic:1.2.3'
+  }
 }
