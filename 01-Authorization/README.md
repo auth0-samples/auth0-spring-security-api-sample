@@ -12,7 +12,7 @@ This example requires Java 8.
 
 ## Configure the endpoints
 
-This seed uses three endpoints: `api/public`, `api/private` and `api/private-scoped`. The former will not require authentication, while the later will do.
+This seed uses three endpoints: `api/public`, `api/private` and `api/private-scoped`. The former will not require authentication, while the latter will do.
 
 First we create the controller for our endpoints: `APIController.java`.
 
@@ -94,7 +94,7 @@ curl -X GET -H "Content-Type: application/json" -H "Cache-Control: no-cache" "ht
 
 You should get the message: `All good. You DO NOT need to be authenticated to call /api/public.`.
 
-To test the secure endpoint send a `GET` request at `http://localhost:3010/api/private`. In this case you will also have to add a valid `access_token` to your request.
+To test the secure endpoint send a `GET` request at `http://localhost:3010/api/private`. In this case, you will also have to add a valid `access_token` to your request.
 
 ```bash
 curl -X GET -H "Authorization: Bearer {YOUR_ACCESS_TOKEN}" -H "Cache-Control: no-cache" "http://localhost:3010/api/private"
@@ -112,7 +112,7 @@ You should get the message: `All good. You can see this because you are Authenti
 
 ## Running the sample with Docker
 
-In order to run the example with docker you need to have `docker` installed.
+In order to run the example with docker, you need to have `docker` installed.
 
 You also need to set the client credentials as explained [previously](#authentication).
 
