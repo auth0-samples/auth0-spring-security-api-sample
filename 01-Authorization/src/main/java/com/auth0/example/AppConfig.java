@@ -43,6 +43,10 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
                 .forRS256(apiAudience, issuer)
                 .configure(http)
                 .authorizeRequests()
+
+                // Note: If passing an Authorization header, Spring Security will validate it even with permitAll()
+                // You can ignore security filters if this is an issue for you, as discussed here:
+                // https://stackoverflow.com/questions/36296869/spring-security-permitall-still-considering-token-passed-in-authorization-header
                 .antMatchers(HttpMethod.GET, "/api/public").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/private").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/private-scoped").hasAuthority("read:messages");
